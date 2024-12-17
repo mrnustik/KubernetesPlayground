@@ -12,6 +12,6 @@ RUN dotnet publish "KubeTestApp.Api.csproj" -a $TARGETARCH --no-restore -o /app
 
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:8.0
 EXPOSE 8080
-COPY --link --from=build /app .
+COPY --from=build /app .
 USER $APP_UID
 ENTRYPOINT ["/app"]
