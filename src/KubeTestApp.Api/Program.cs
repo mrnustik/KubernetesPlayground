@@ -18,8 +18,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.MapHealthChecks("/health/full");
 app.MapHealthChecks("/health/live", new HealthCheckOptions
 {
