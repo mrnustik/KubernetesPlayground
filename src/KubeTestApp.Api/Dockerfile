@@ -7,17 +7,19 @@ EXPOSE 8081
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 ARG TARGETARCH
+ARG TARGETPLATFORM
 WORKDIR /src
 COPY ["src/KubeTestApp.Api/KubeTestApp.Api.csproj", "src/KubeTestApp.Api/"]
-RUN dotnet restore "src/KubeTestApp.Api/KubeTestApp.Api.csproj" -a $TARGETARCH
+RUN dotnet restore "src/KubeTestApp.Api/KubeTestApp.Api.csproj" -r $TARGETPLATFORM -a $TARGETARCH
 COPY . .
 WORKDIR "/src/src/KubeTestApp.Api"
-RUN dotnet build "KubeTestApp.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build -a $TARGETARCH
+RUN dotnet build "KubeTestApp.Api.csproj" -c $BUILD_CONFIGURATION -r $TARGETPLATFORM -o /app/build -a $TARGETARCH
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 ARG TARGETARCH
-RUN dotnet publish "KubeTestApp.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false -a $TARGETARCH
+ARG TARGETPLATFORM
+RUN dotnet publish "KubeTestApp.Api.csproj" -c $BUILD_CONFIGURATION  -r $TARGETPLATFORM -o /app/publish /p:UseAppHost=false -a $TARGETARCH
 
 FROM base AS final
 WORKDIR /app
