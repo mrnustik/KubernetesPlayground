@@ -10,7 +10,7 @@ jobs:
 
   build:
     env:
-      REGISTRY: 'mrnustik'
+      REGISTRY: 'docker.io/mrnustik'
       IMAGE_NAME: 'kubernetes-test-api'
     runs-on: ubuntu-latest
     permissions:
