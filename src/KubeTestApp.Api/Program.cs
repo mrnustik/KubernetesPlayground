@@ -12,7 +12,7 @@ builder.Services.AddHealthChecks()
        .AddAsyncCheck("Check", async () =>
        {
            await Task.Delay(100);
-           return HealthCheckResult.Healthy();
+           return HealthCheckResult.Unhealthy();
        });
 
 var app = builder.Build();
