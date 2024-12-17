@@ -6,8 +6,7 @@ COPY ["src/KubeTestApp.Api/KubeTestApp.Api.csproj", "src/KubeTestApp.Api/"]
 RUN dotnet restore "src/KubeTestApp.Api/KubeTestApp.Api.csproj"  -a $TARGETARCH
 
 COPY . .
-WORKDIR "/src/src/KubeTestApp.Api"
-RUN dotnet publish "KubeTestApp.Api.csproj" -a $TARGETARCH --no-restore -o /app
+RUN dotnet publish "src/KubeTestApp.Api/KubeTestApp.Api.csproj" -a $TARGETARCH --no-restore -o /app
 
 
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:8.0
